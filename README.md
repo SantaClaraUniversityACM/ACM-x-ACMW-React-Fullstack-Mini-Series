@@ -2,24 +2,44 @@
 
 React Counter & History Demo
 
-A simple React workshop project demonstrating components, state, and routing.
-Participants will build a counter that tracks history and uses routing to show different views.
+A simple React app to demonstrate components, state, and routing.
+Participants will build a counter that tracks clicks and can view the history on a separate page.
+
+Table of Contents
 
 Prerequisites
 
-Node.js installed (Download here
-)
+Create the Project
 
-Basic familiarity with terminal commands
+Prepare Your Project
 
-Verify installation:
+Create the Counter Component
+
+Set Up Routing in App.jsx
+
+Run and Test
+
+Recap & Key Takeaways
+
+Prerequisites
+
+Make sure you have Node.js installed:
+
+Go to https://nodejs.org/en/download
+
+Install Node.js following the instructions for your OS
+
+Verify installation in your terminal:
 
 node -v
 npm -v
 
-Step 1: Create the Project
 
-Open terminal and navigate to the folder where you want to create the project:
+You should see version numbers for both Node and npm.
+
+Create the Project
+
+Open a terminal and navigate to the folder where you want to create your project:
 
 pwd
 
@@ -39,62 +59,60 @@ Framework: React
 
 Variant: JavaScript
 
-Rollup TypeScript: No
-
 Install dependencies now: Yes
 
-Start the development server:
+Start the dev server:
 
 npm run dev
 
 
-Copy the local URL from the terminal (e.g., http://localhost:5173) into your browser. You should see the Vite React starter page.
+Open the local URL in your browser (e.g., http://localhost:5173).
+You should see the default Vite React page.
 
-Step 2: Prepare Your Project
+Prepare Your Project
 
-Delete index.css (we’ll use inline styles for simplicity)
+Delete index.css
 
-Remove the import of index.css in main.jsx:
+Remove the import from main.jsx:
 
 - import './index.css';
 
 
-In the src folder, create a new file called Counter.jsx.
+In the src folder, create a new file: Counter.jsx
 
-Step 3: Create the Counter Component
+Create the Counter Component
 
-In Counter.jsx, we define the main component that will handle:
+The Counter component will handle:
 
-The counter value
+The current counter value
 
 Increment and decrement logic
 
 History tracking
 
-Conditional rendering depending on which page is displayed
+Conditional rendering of buttons and history
 
-Counter.jsx
 import { useState } from "react";
 
-// Counter component receives props to control its behavior
+// Props:
+// - showHistory: whether to display the click history
+// - showControls: whether to display increment/decrement buttons
 export default function Counter({ showHistory = false, showControls = true }) {
-  // State to keep track of the current count
-  const [count, setCount] = useState(0);
-  // State to keep track of the history of counts
-  const [history, setHistory] = useState([]);
+  const [count, setCount] = useState(0);       // current counter value
+  const [history, setHistory] = useState([]);  // store previous values
 
-  // Increment function
+  // Increment the counter
   const increment = () => {
     const next = count + 1;
     setCount(next);
-    setHistory([...history, next]); // store the new value in history
+    setHistory([...history, next]);
   };
 
-  // Decrement function
+  // Decrement the counter
   const decrement = () => {
     const next = count - 1;
     setCount(next);
-    setHistory([...history, next]); // store the new value in history
+    setHistory([...history, next]);
   };
 
   // Inline styles for simplicity
@@ -131,13 +149,10 @@ export default function Counter({ showHistory = false, showControls = true }) {
 
   return (
     <div style={styles.container}>
-      {/* Title */}
       <h1>Click Counter</h1>
-
-      {/* Current counter value */}
       <h2>{count}</h2>
 
-      {/* Buttons (conditionally rendered based on showControls prop) */}
+      {/* Render buttons only if showControls is true */}
       {showControls && (
         <div style={styles.buttons}>
           <button style={styles.button} onClick={decrement}>-1</button>
@@ -145,7 +160,7 @@ export default function Counter({ showHistory = false, showControls = true }) {
         </div>
       )}
 
-      {/* History (conditionally rendered based on showHistory prop) */}
+      {/* Render history only if showHistory is true */}
       {showHistory && (
         <p style={styles.history}>
           {history.join(" → ") || "No clicks yet"}
@@ -158,26 +173,24 @@ export default function Counter({ showHistory = false, showControls = true }) {
 
 Explanation for beginners:
 
-useState keeps track of counter and history
+useState keeps track of the current value and the history
 
-showControls and showHistory props allow reusing the component on different pages
+showControls and showHistory allow the same component to be reused on multiple pages
 
-Buttons update state, and history is displayed if showHistory is true
+Buttons update state and the history array
 
-Step 4: Set Up Routing in App.jsx
+Set Up Routing in App.jsx
 
-Now we’ll use React Router to display different views:
+We’ll use React Router to create two routes:
 
 / → Counter with buttons
 
 /history → Counter history only
 
-App.jsx
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Counter from "./Counter";
 
 export default function App() {
-  // Style for the navigation links
   const linkStyle = {
     position: "fixed",
     bottom: "20px",
@@ -215,37 +228,37 @@ export default function App() {
 }
 
 
-Explanation for beginners:
+Explanation:
 
-BrowserRouter wraps the app to enable routing
+BrowserRouter enables routing
 
-<Routes> contains all possible routes
+<Routes> contains all route definitions
 
-<Route path="/" element={...}> defines what renders at /
+<Route path="/" element={...}> renders the homepage
 
 <Link> updates the URL without refreshing the page
 
-Step 5: Run and Test
+Run and Test
 
-Start the development server:
+Start the server (if not already running):
 
 npm run dev
 
 
-Open the URL in your browser
+Open the browser to your local URL
 
-On /, click the buttons — the counter should increase or decrease
+On /, click the counter buttons — the number should increase/decrease
 
-Click View History → to go to /history — the buttons disappear, and you see all previous values
+Click View History → to navigate to /history — only the history shows
 
 Click ← Back to return to the counter
 
-Step 6: Recap & Key Takeaways
+Recap & Key Takeaways
 
-Components can be reused with props to show different UI
+Components can be reused with different props
 
-State can be shared inside a component and passed through routes
+State can persist within a component while switching routes
 
-React Router allows single-page navigation
+React Router allows single-page navigation without page reloads
 
-Inline styling is simple and works for small demos
+Inline styling is enough for simple demos
